@@ -1,0 +1,6 @@
+# mac ds
+.DS_Store
+
+# cache
+__pycache__
+

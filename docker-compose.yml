@@ -1,0 +1,47 @@
+version: '3'
+services:
+    db:
+        image: mysql:latest
+        container_name: airflow-db
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_USER=airflow
+            - MYSQL_PASSWORD=airflow
+            - MYSQL_DATABASE=airflow
+        expose:
+          - 3306
+        ports:
+          - "3307:3306"
+        logging:
+            options:
+                max-size: 10m
+                max-file: "3"
+        # command: ['sh', '/sql_entrypoint.sh']
+        volumes:
+            - ./script/sql_entrypoint.sh:/sql_entrypoint.sh
+            - dbdata:/var/lib/mysql
+
+    webserver:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: airflow
+        restart: always
+        depends_on:
+            - db
+        logging:
+            options:
+                max-size: 10m
+                max-file: "3"
+        volumes:
+            - ./dags:/home/airflow/dags
+        ports:
+            - "8080:8080"
+        command: webserver
+        healthcheck:
+            test: ["CMD-SHELL", "[ -f /home/airflow/airflow-webserver.pid ]"]
+            interval: 30s
+            timeout: 30s
+            retries: 3
+volumes:
+  dbdata:
