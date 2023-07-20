@@ -2,6 +2,8 @@
 
 AIRFLOW를 사용한 증권사 리포트 수집/분석
 
+<br>
+
 ## 환경
 
 HOST : MAC PRO M1  
@@ -12,6 +14,8 @@ Selenium : 4.10.0
 Browser : Firefox  
 Driver : Geckodriver
 
+<br>
+
 ## 개요
 
 
@@ -19,6 +23,8 @@ Driver : Geckodriver
 
 - KST 기준 일요일 자정 증권사 리포트 데이터 수집 및 저장
 
+
+<br>
 
 ## 데이터베이스(Mysql)
 
@@ -32,6 +38,7 @@ Driver : Geckodriver
 
 - 증권사 분석 데이터 테이블
 
+<br>
 
 ## 사용법
 
@@ -58,6 +65,29 @@ docker run -it <실행중인 mysql 컨테이너>
 - mysql 컨테이너에 접속 후 `mysql -u root -p` (기본 패스워드 : root)로 mysql 연결
 
 - `use crawling`, `select * from stock`으로 데이터 저장 확인
+
+<br>
+
+## 결과
+
+<img src="./imgs/dag.png">
+
+- Dag 실행 후 Status 이상 없음
+
+<br>
+
+<img src="./imgs/tickers.png">
+
+<br>
+
+<img src="./imgs/stock.png">
+
+<br>
+
+
+- mysql 컨테이너에 이상 없이 데이터 적재 확인
+
+<br>
 
 ## 수많은 오류들
 

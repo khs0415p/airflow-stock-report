@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from airflow import DAG
-from airflow.operators.bash import BashOperator
+from airflow.utils.dates import days_ago
 from airflow.operators.python import PythonOperator
 from crawl.report_crawling import crawling
 from utils import db_check
@@ -24,7 +24,7 @@ with DAG(
     dag_id="stock-crawl-process",
     default_args=deafult_args,
     description="Data(stock) crawling and Data pre-processing",
-    start_date=datetime(2023, 7, 1, tzinfo=kst),
+    start_date=days_ago(13).replace(tzinfo=kst),
     schedule="@weekly",
     tags=["crawling"],
 ) as dag:
